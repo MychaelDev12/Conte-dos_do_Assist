@@ -1,0 +1,26 @@
+name: Alerta de Modificação
+
+on:
+  push:
+    branches:
+      - main  # ou a branch que você usa
+
+jobs:
+  enviar-alerta:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar e-mail de alerta
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: estudanteindomavel@gmail.com@gmail.com
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "🚨 Alguém modificou o repositório!"
+          body: |
+            Repositório: ${{ github.repository }}
+            Autor: ${{ github.actor }}
+            Mensagem do commit: ${{ github.event.head_commit.message }}
+            Arquivos modificados: ${{ join(github.event.commits.*.modified, ', ') }}
+          to: estudanteindomavel@gmail.com@gmail.com
+          from: estudanteindomavel@gmail.com@gmail.com
